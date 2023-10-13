@@ -1,6 +1,6 @@
 package model;
 
-// represents a cookie object with number of cookies, name, and value of each cookie
+// represents a cookie jar with number of cookies, name, and value of each cookie
 public class CookieJar {
     private int numCookies;
     private String name;
@@ -17,17 +17,25 @@ public class CookieJar {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds one to numCookies
+    // EFFECTS: adds 1 cookie to the cookie jar
     public void addCookie() {
         this.numCookies++;
     }
 
     // MODIFIES: this
-    // EFFECTS: subtracts five from numCookies
-    public void buyHelper() {
-        if (this.numCookies >= 5) {
-            this.numCookies -= 5;
+    // EFFECTS: checks if there are not enough cookies in the jar to buy a cookieHelper
+    public boolean checkNotEnough() {
+        if (this.numCookies < 5) {
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: subtracts 5 cookies from the cookie jar
+    public void buyHelper() {
+        this.numCookies -= 5;
     }
 
     public int getNumCookies() {
