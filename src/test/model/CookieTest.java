@@ -41,7 +41,7 @@ class CookieTest {
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.buyCookieHelper();
+        testCookie.canAfford();
         assertEquals(0, testCookie.getNumCookies());
     }
 
@@ -52,7 +52,7 @@ class CookieTest {
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.buyCookieHelper();
+        testCookie.canAfford();
         assertEquals(0, testCookie.getNumCookies());
         testCookie.addCookie();
         testCookie.addCookie();
@@ -60,7 +60,7 @@ class CookieTest {
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.buyCookieHelper();
+        testCookie.canAfford();
         assertEquals(1, testCookie.getNumCookies());
     }
 
@@ -71,7 +71,7 @@ class CookieTest {
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.buyCookieHelper();
+        testCookie.canAfford();
         assertEquals(0, testCookie.getNumCookies());
         testCookie.addCookie();
         testCookie.addCookie();
@@ -79,14 +79,14 @@ class CookieTest {
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.buyCookieHelper();
+        testCookie.canAfford();
         assertEquals(1, testCookie.getNumCookies());
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.buyCookieHelper();
+        testCookie.canAfford();
         assertEquals(3, testCookie.getNumCookies());
         testCookie.addCookie();
-        testCookie.buyCookieHelper();
+        testCookie.canAfford();
         assertEquals(4, testCookie.getNumCookies());
     }
 
@@ -96,7 +96,7 @@ class CookieTest {
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.buyCookieHelper();
+        testCookie.canAfford();
         assertEquals(4, testCookie.getNumCookies());
     }
 

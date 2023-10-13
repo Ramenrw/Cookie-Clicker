@@ -17,7 +17,7 @@ public class Cookie {
         this.numCookies++;
     }
 
-    public boolean buyCookieHelper() {
+    public boolean canAfford() {
         if (this.numCookies < 5) {
             System.out.println("Sorry, you do not have enough cookies to purchase a cookie helper.");
             return false;
