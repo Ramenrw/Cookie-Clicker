@@ -22,8 +22,8 @@ public class Game {
     private ScheduledExecutorService executor;
     private List<ScheduledExecutorService> executorList;
 
-    // EFFECTS: creates empty lists of cookie jars and executors
-    //          prompts user to create a new cookie jar then starts the game
+    // EFFECTS: creates empty lists of cookieJar and executors
+    //          prompts user to create a new cookieJar then starts the game
     public Game() {
         cookieJarList = new ArrayList<>();
         executorList = new ArrayList<>();
