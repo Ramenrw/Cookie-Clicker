@@ -25,7 +25,9 @@ public class CookieJar {
     // MODIFIES: this
     // EFFECTS: subtracts five from numCookies
     public void buyHelper() {
-        this.numCookies -= 5;
+        if (this.numCookies >= 5) {
+            this.numCookies -= 5;
+        }
     }
 
     public int getNumCookies() {
