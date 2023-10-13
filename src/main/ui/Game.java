@@ -23,7 +23,7 @@ public class Game {
     private List<ScheduledExecutorService> executorList;
 
     // EFFECTS: creates empty lists of cookie jars and executors
-    //          prompts user to create a new cookie jar then starts the game
+    //          prompts user to create a new cookie then starts the game
     public Game() {
         cookieJarList = new ArrayList<>();
         executorList = new ArrayList<>();
@@ -61,9 +61,9 @@ public class Game {
 
     // MODIFIES: this
     // EFFECTS: creates a cookieHelper at the cost of 5 cookies
-    //          cookieHelper adds a cookie every 5 seconds, stackable
+    //          cookieHelper adds a cookie every 5 seconds. Is stackable
     public void cookieHelper() {
-        if (cookieJar.checkNotEnough()) {
+        if (cookieJar.getNumCookies() < 5) {
             System.out.println("Sorry, you do not have enough cookies to purchase a cookie helper.");
         } else {
             cookieJar.buyHelper();

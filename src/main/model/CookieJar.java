@@ -23,19 +23,11 @@ public class CookieJar {
     }
 
     // MODIFIES: this
-    // EFFECTS: checks if there are not enough cookies in the jar to buy a cookieHelper
-    public boolean checkNotEnough() {
-        if (this.numCookies < 5) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: subtracts 5 cookies from the cookie jar
+    // EFFECTS: subtracts 5 from cookie jar if number of cookies there is greater or equal to 5
     public void buyHelper() {
-        this.numCookies -= 5;
+        if (this.numCookies >= 5) {
+            this.numCookies -= 5;
+        }
     }
 
     public int getNumCookies() {
