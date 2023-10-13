@@ -17,21 +17,8 @@ public class Cookie {
         this.numCookies++;
     }
 
-    public boolean canAfford() {
-        if (this.numCookies < 5) {
-            System.out.println("Sorry, you do not have enough cookies to purchase a cookie helper.");
-            return false;
-        } else {
-            this.numCookies -= 5;
-            if (this.numCookies == 1) {
-                System.out.println("You have bought a cookie helper! Each cookie helper gives you one cookie each "
-                        + "second. You now have " + numCookies + " cookie.");
-            } else {
-                System.out.println("You have bought a cookie helper! Each cookie helper gives you one cookie each "
-                        + "second. You now have " + numCookies + " cookies.");
-            }
-            return true;
-        }
+    public void buyHelper() {
+        this.numCookies -= 5;
     }
 
     public int getNumCookies() {

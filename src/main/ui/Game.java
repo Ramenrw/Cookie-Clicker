@@ -10,16 +10,22 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-// Citations: https://stackoverflow.com/questions/12908412/print-hello-world-every-x-seconds
-// and https://github.students.cs.ubc.ca/CPSC210/TellerApp
+// Citations:
+// https://stackoverflow.com/questions/12908412/print-hello-world-every-x-seconds
+// https://github.students.cs.ubc.ca/CPSC210/TellerApp
+// https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html
 
 // Game
 public class Game {
     Cookie cookie;
     List<Cookie> cookieList;
+    ScheduledExecutorService executor;
+    List<ScheduledExecutorService> executorList;
 
+    // EFFECTS: constructs a cookie clicker game with
     public Game() {
         cookieList = new ArrayList<>();
+        executorList = new ArrayList<>();
         System.out.println("Welcome to Cookie Clicker!");
         makeCookie();
         playGame();
@@ -51,19 +57,32 @@ public class Game {
     }
 
     public void cookieHelper() {
-        if (cookie.canAfford()) {
+        if (cookie.getNumCookies() < 5) {
+            System.out.println("Sorry, you do not have enough cookies to purchase a cookie helper.");
+        } else {
+            cookie.buyHelper();
+            if (cookie.getNumCookies() == 1) {
+                System.out.println("You have bought a cookie helper! Each cookie helper gives you one cookie every 5 "
+                        + "seconds. You now have " + cookie.getNumCookies() + " cookie.");
+            } else {
+                System.out.println("You have bought a cookie helper! Each cookie helper gives you one cookie every 5 "
+                        + "seconds. You now have " + cookie.getNumCookies() + " cookies.");
+            }
             Runnable addCookie = new Runnable() {
                 public void run() {
                     cookie.addCookie();
                 }
             };
-
-            ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+            executor = Executors.newScheduledThreadPool(1);
             executor.scheduleAtFixedRate(addCookie, 5, 5, TimeUnit.SECONDS);
+            executorList.add(executor);
         }
     }
 
     public void report() {
+        for (ScheduledExecutorService executor : executorList) {
+            executor.shutdown();
+        }
         System.out.println("You ended up with " + cookie.getNumCookies() + " cookies!"
                 + " It is worth a total of $" + cookie.getCost() + ". Data has been added to the list.");
         cookieList.add(cookie);
@@ -78,13 +97,10 @@ public class Game {
         cookie = new Cookie(name, value);
     }
 
-    public void startMessage() {
-        System.out.println("Here are your options:\n\tSpacebar - add one cookie\n\ta - obtain information about your "
-                + "current cookies\n\ts - purchase a cookie helper that gives you cookies (costs 5 cookies)\n\tz - "
-                + "start making different cookies\n\tx - quit");
-    }
-
     public void conclude() {
+        for (ScheduledExecutorService executor : executorList) {
+            executor.shutdown();
+        }
         int totalCost = 0;
         System.out.println("\nThanks for playing! You ended with " + cookieList.size() + " different collections of "
                 + "cookies:");
@@ -95,5 +111,11 @@ public class Game {
             totalCost += cookie.getCost();
         }
         System.out.println("The total value of all your cookies is $" + totalCost);
+    }
+
+    public void startMessage() {
+        System.out.println("Here are your options:\n\tEnter - add one cookie\n\ta - obtain information about your "
+                + "current cookies\n\ts - purchase a cookie helper that gives you cookies (costs 5 cookies)\n\tz - "
+                + "start making different cookies\n\tx - quit");
     }
 }

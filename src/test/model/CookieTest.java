@@ -35,69 +35,33 @@ class CookieTest {
     }
 
     @Test
-    void testBuyCookieHelper() {
+    void testBuyHelper() {
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.canAfford();
-        assertEquals(0, testCookie.getNumCookies());
+        testCookie.buyHelper();
+        assertEquals (0, testCookie.getNumCookies());
     }
 
     @Test
-    void testBuyMultipleCookieHelpers() {
+    void testBuyMultipleHelpers() {
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.canAfford();
-        assertEquals(0, testCookie.getNumCookies());
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.canAfford();
-        assertEquals(1, testCookie.getNumCookies());
-    }
-
-    @Test
-    void testBuyMultipleCookieHelpersThenNotEnough() {
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.canAfford();
-        assertEquals(0, testCookie.getNumCookies());
+        testCookie.buyHelper();
+        assertEquals (0, testCookie.getNumCookies());
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
         testCookie.addCookie();
-        testCookie.canAfford();
-        assertEquals(1, testCookie.getNumCookies());
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.canAfford();
-        assertEquals(3, testCookie.getNumCookies());
-        testCookie.addCookie();
-        testCookie.canAfford();
-        assertEquals(4, testCookie.getNumCookies());
-    }
-
-    @Test
-    void testBuyCookieHelperNotEnough() {
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.addCookie();
-        testCookie.canAfford();
-        assertEquals(4, testCookie.getNumCookies());
+        testCookie.buyHelper();
+        assertEquals (1, testCookie.getNumCookies());
     }
 
 }
