@@ -85,12 +85,12 @@ public class Game {
 
     public void conclude() {
         int totalCost = 0;
-        System.out.println("Thanks for playing! You ended with " + cookieList.size() + " different collections of"
+        System.out.println("Thanks for playing! You ended with " + cookieList.size() + " different collections of "
                 + "cookies:");
         for (int num = 0; num < cookieList.size(); num++) {
             cookie = cookieList.get(num);
-            System.out.println("You had " + cookie.getNumCookies() + cookie.getName() + " cookies. They were worth $"
-                    + cookie.getCost() + "!");
+            System.out.println("You had " + cookie.getNumCookies() + " " + cookie.getName() + " cookies. They were"
+                    + "worth $" + cookie.getCost() + "!");
             totalCost += cookie.getCost();
         }
         System.out.println("The total value of all your cookies is $" + totalCost);
