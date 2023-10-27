@@ -17,7 +17,7 @@ class JsonReaderTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            Bakery bakery = reader.readBakery();
+            Bakery bakery = reader.read();
             fail("IOException expected");
         } catch (IOException e) {
             // pass
@@ -28,7 +28,7 @@ class JsonReaderTest {
     void testReaderEmptyBakery() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyBakery.json");
         try {
-            Bakery bakery = reader.readBakery();
+            Bakery bakery = reader.read();
             assertEquals(0, bakery.getNumCookies());
             assertEquals(0, bakery.getHelpers().size());
         } catch (IOException e) {
@@ -40,7 +40,7 @@ class JsonReaderTest {
     void testReaderBakery() {
         JsonReader reader = new JsonReader("./data/testReaderBakery.json");
         try {
-            Bakery bakery = reader.readBakery();
+            Bakery bakery = reader.read();
             assertEquals(3, bakery.getNumCookies());
             assertEquals(2, bakery.getHelpers().size());
         } catch (IOException e) {

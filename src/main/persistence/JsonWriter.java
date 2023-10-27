@@ -1,14 +1,14 @@
 package persistence;
 
-// Citations:
-// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-
 import model.Bakery;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+
+// Citations:
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
 // Represents a writer that writes JSON representation of bakery to file
 public class JsonWriter {

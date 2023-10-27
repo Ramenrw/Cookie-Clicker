@@ -35,7 +35,7 @@ class JsonWriterTest {
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterEmptyBakery.json");
-            bakery = reader.readBakery();
+            bakery = reader.read();
             assertEquals(0, bakery.getNumCookies());
             assertEquals(0, bakery.getHelpers().size());
         } catch (IOException e) {
@@ -58,7 +58,7 @@ class JsonWriterTest {
             writer.close();
 
             JsonReader reader = new JsonReader("./data/testWriterBakery.json");
-            bakery = reader.readBakery();
+            bakery = reader.read();
             assertEquals(3, bakery.getNumCookies());
             assertEquals(2, bakery.getHelpers().size());
 

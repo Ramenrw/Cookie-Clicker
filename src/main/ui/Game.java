@@ -7,8 +7,6 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
 
 import java.util.Scanner;
 import java.util.concurrent.Executors;
@@ -26,7 +24,6 @@ public class Game {
     private Bakery bakery;
     private Helper helper;
     private ScheduledExecutorService executor;
-    private List<ScheduledExecutorService> executorList;
     private Scanner input;
     private boolean isRunning;
     private JsonWriter jsonWriter;
@@ -37,7 +34,6 @@ public class Game {
     public Game() throws FileNotFoundException {
         bakery = new Bakery();
         helper = new Helper();
-        executorList = new ArrayList<>();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         System.out.println("Welcome to Cookie Clicker!");
@@ -69,9 +65,7 @@ public class Game {
             } else {
                 System.out.println("You have bought a helper! You now have " + bakery.getNumCookies() + " cookies.");
             }
-            executor = Executors.newScheduledThreadPool(1);
-            executor.scheduleAtFixedRate(addCookie, 5, 5, TimeUnit.SECONDS);
-            executorList.add(executor);
+            addExecutor();
         }
     }
 
@@ -101,6 +95,7 @@ public class Game {
                 + "\nEach helper costs " + helper.getCost() + " cookies to buy.");
     }
 
+    // EFFECTS: saves the bakery to file
     public void save() {
         try {
             jsonWriter.open();
@@ -112,28 +107,20 @@ public class Game {
         }
     }
 
-    // EFFECTS: saves the workroom to file
+    // EFFECTS: loads the bakery from file
     public void load() {
         try {
-            // hmmmm
-            bakery = jsonReader.readBakery();
+            for (int i = 0; i < bakery.getHelpers().size(); i++) {
+                executor.shutdown();
+            }
+            bakery = jsonReader.read();
+            for (int i = 0; i < bakery.getHelpers().size(); i++) {
+                addExecutor();
+            }
             System.out.println("Loaded progress from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: terminates all existing helpers
-    //          displays information of bakery
-    public void conclude() {
-        /*
-        for (Helper helper : bakery.getHelpers()) {
-            executor.shutdown();
-        }
-        */
-        System.out.println("\nThanks for playing! You ended with " + bakery.getNumCookies() + " cookies and "
-                + bakery.getHelpers().size() + " helpers.");
     }
 
     // MODIFIES: this
@@ -161,10 +148,9 @@ public class Game {
         }
     }
 
-    public void setExecutor() {
+    public void addExecutor() {
         executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(addCookie, 5, 5, TimeUnit.SECONDS);
-        executorList.add(executor);
     }
 
     Runnable addCookie = new Runnable() {
@@ -172,4 +158,13 @@ public class Game {
             bakery.addCookie();
         }
     };
+
+    // MODIFIES: this
+    // EFFECTS: terminates all existing helpers
+    //          displays information of bakery
+    public void conclude() {
+        System.out.println("\nThanks for playing! You ended with " + bakery.getNumCookies() + " cookies and "
+                + bakery.getHelpers().size() + " helpers.");
+        System.exit(0);
+    }
 }

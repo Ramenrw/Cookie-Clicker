@@ -7,12 +7,12 @@ import persistence.Writable;
 import java.util.List;
 import java.util.ArrayList;
 
-// represents a bakery with number of cookies
+// represents a bakery with number of cookies and list of helpers
 public class Bakery implements Writable {
     private int numCookies;
     private List<Helper> helpers;
 
-    // EFFECTS: sets number of cookies as 0
+    // EFFECTS: sets number of cookies as 0 and an empty list of helpers
     public Bakery() {
         this.numCookies = 0;
         helpers = new ArrayList<>();
@@ -26,7 +26,6 @@ public class Bakery implements Writable {
 
     // MODIFIES: this
     // EFFECTS: subtracts 5 cookies and add a helper to helpers if number of cookies is greater or equal to 5
-    //
     public void buyHelper() {
         if (this.numCookies >= 5) {
             this.numCookies -= 5;
@@ -58,7 +57,7 @@ public class Bakery implements Writable {
         return json;
     }
 
-    // EFFECTS: returns things in this workroom as a JSON array
+    // EFFECTS: returns things in this bakery as a JSON array
     private JSONArray helpersToJson() {
         JSONArray jsonArray = new JSONArray();
 
