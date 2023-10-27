@@ -36,6 +36,8 @@ public class Game {
         helper = new Helper();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+        executor = Executors.newScheduledThreadPool(1);
+        executor.scheduleAtFixedRate(addCookie, 5, 5, TimeUnit.SECONDS);
         System.out.println("Welcome to Cookie Clicker!");
         playGame();
     }
@@ -65,7 +67,6 @@ public class Game {
             } else {
                 System.out.println("You have bought a helper! You now have " + bakery.getNumCookies() + " cookies.");
             }
-            addExecutor();
         }
     }
 
@@ -110,13 +111,7 @@ public class Game {
     // EFFECTS: loads the bakery from file
     public void load() {
         try {
-            for (int i = 0; i < bakery.getHelpers().size(); i++) {
-                executor.shutdown();
-            }
             bakery = jsonReader.read();
-            for (int i = 0; i < bakery.getHelpers().size(); i++) {
-                addExecutor();
-            }
             System.out.println("Loaded progress from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
@@ -148,14 +143,11 @@ public class Game {
         }
     }
 
-    public void addExecutor() {
-        executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(addCookie, 5, 5, TimeUnit.SECONDS);
-    }
-
     Runnable addCookie = new Runnable() {
         public void run() {
-            bakery.addCookie();
+            for (Helper helper : bakery.getHelpers()) {
+                bakery.addCookie();
+            }
         }
     };
 
