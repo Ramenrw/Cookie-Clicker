@@ -1,7 +1,12 @@
 package ui;
 
-import model.CookieJar;
+import model.Bakery;
+import model.Helper;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,44 +22,36 @@ import java.util.concurrent.TimeUnit;
 
 // Cookie clicker application
 public class Game {
-    private CookieJar cookieJar;
-    private List<CookieJar> cookieJarList;
+    private static final String JSON_STORE = "./data/game.json";
+    private Bakery bakery;
+    private Helper helper;
     private ScheduledExecutorService executor;
     private List<ScheduledExecutorService> executorList;
+    private Scanner input;
+    private boolean isRunning;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-    // EFFECTS: creates empty lists of cookieJar and executors
-    //          prompts user to create a new cookieJar then starts the game
-    public Game() {
-        cookieJarList = new ArrayList<>();
+    // EFFECTS: creates empty lists of Bakery and executors
+    //          prompts user to create a new Bakery then starts the game
+    public Game() throws FileNotFoundException {
+        bakery = new Bakery();
+        helper = new Helper();
         executorList = new ArrayList<>();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         System.out.println("Welcome to Cookie Clicker!");
-        makeCookieJar();
         playGame();
     }
 
     // MODIFIES: this
     // EFFECTS: processes user input
     public void playGame() {
-        Boolean isRunning = true;
         startMessage();
-        Scanner input = new Scanner(System.in);
+        input = new Scanner(System.in);
+        isRunning = true;
         while (isRunning) {
-            String command = input.nextLine().toLowerCase();
-            if (command.isBlank()) {
-                cookieJar.addCookie();
-            } else if (command.equals("a")) {
-                System.out.println("You currently have " + cookieJar.getNumCookies() + " cookies in the jar.");
-            } else if (command.equals("s")) {
-                cookieHelper();
-            } else if (command.equals("z")) {
-                report();
-                makeCookieJar();
-            } else if (command.equals("x")) {
-                report();
-                isRunning = false;
-            } else {
-                System.out.println("Invalid input, please try again.");
-            }
+            options();
         }
         conclude();
     }
@@ -62,78 +59,116 @@ public class Game {
     // MODIFIES: this
     // EFFECTS: creates a cookieHelper at the cost of 5 cookies
     //          cookieHelper adds a cookie every 5 seconds. Is stackable
-    public void cookieHelper() {
-        if (cookieJar.getNumCookies() < 5) {
-            System.out.println("Sorry, you do not have enough cookies to purchase a cookie helper.");
+    public void buyHelper() {
+        if (bakery.getNumCookies() < 5) {
+            System.out.println("Sorry, you do not have enough cookies to buy a helper.");
         } else {
-            cookieJar.buyHelper();
-            if (cookieJar.getNumCookies() == 1) {
-                System.out.println("You have bought a cookie helper! Each cookie helper gives you one cookie every 5 "
-                        + "seconds. You now have " + cookieJar.getNumCookies() + " cookie in the jar.");
+            bakery.buyHelper();
+            if (bakery.getNumCookies() == 1) {
+                System.out.println("You have bought a helper! You now have " + bakery.getNumCookies() + " cookie.");
             } else {
-                System.out.println("You have bought a cookie helper! Each cookie helper gives you one cookie every 5 "
-                        + "seconds. You now have " + cookieJar.getNumCookies() + " cookies in the jar.");
+                System.out.println("You have bought a helper! You now have " + bakery.getNumCookies() + " cookies.");
             }
-            Runnable addCookie = new Runnable() {
-                public void run() {
-                    cookieJar.addCookie();
-                }
-            };
             executor = Executors.newScheduledThreadPool(1);
             executor.scheduleAtFixedRate(addCookie, 5, 5, TimeUnit.SECONDS);
             executorList.add(executor);
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: terminates all existing cookieHelpers
-    //          stores number of cookies, name, and cost of the current cookieJar in cookieJarList
-    public void report() {
-        for (ScheduledExecutorService executor : executorList) {
-            executor.shutdown();
-        }
-        System.out.println("You ended up with " + cookieJar.getNumCookies() + " cookies in this jar!"
-                + " It is worth a total of $" + cookieJar.getCost() + ". Data has been added to the list.");
-        cookieJarList.add(cookieJar);
-    }
-
-    // REQUIRES: input name must be String, input value must be int
-    // MODIFIES: this
-    // EFFECTS: creates a new cookie jar with name and value per cookie set by user
-    public void makeCookieJar() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("What kind of cookie would you like to add to this jar? ");
-        String name = input.nextLine();
-        System.out.println("How much do you want to sell each cookie for (in $)? ");
-        int value = Integer.parseInt(input.nextLine());
-        cookieJar = new CookieJar(name, value);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: terminates all existing cookieHelpers
-    //          displays information on all cookieJars stored in cookieJarList
-    //          computes the total value of all cookies in all cookieJars
-    public void conclude() {
-        for (ScheduledExecutorService executor : executorList) {
-            executor.shutdown();
-        }
-        int totalCost = 0;
-        System.out.println("\nThanks for playing! You ended with " + cookieJarList.size() + " different jars of "
-                + "cookies:");
-        for (int num = 0; num < cookieJarList.size(); num++) {
-            cookieJar = cookieJarList.get(num);
-            System.out.println(cookieJar.getNumCookies() + " " + cookieJar.getName() + " cookies - worth $"
-                    + cookieJar.getCost());
-            totalCost += cookieJar.getCost();
-        }
-        System.out.println("The total value of all your cookies is $" + totalCost);
-    }
-
     // EFFECTS: displays possible actions for user
     public void startMessage() {
-        System.out.println("Here are your options:\n\tEnter - add one cookie\n\ta - obtain information about the "
-                + "current number of cookies in your cookie jar\n\ts - purchase a cookie helper that gives you cookies "
-                + "every 5 seconds (costs 5 cookies)\n\tz - start making different cookies\n\tx - quit");
+        System.out.println("Here are your options:\n\tEnter - add one cookie\n\tq - obtain information about your "
+                + "current cookies \n\tw - obtain information about your current helpers \n\ta - purchase a helper "
+                + "\n\ti - display general information about helpers\n\ts - save current progress\n\tz - load saved "
+                + "progress\n\tx - quit");
     }
 
+    // EFFECTS: displays information about user's bakery
+    public void userCookieInformation() {
+        System.out.println("You currently have " + bakery.getNumCookies() + " cookies.");
+    }
+
+    // EFFECTS: displays information about user's Helpers
+    public void userHelperInformation() {
+        System.out.println("You currently have " + bakery.getHelpers().size() + " helpers.\nTogether, they will "
+                + "produce " + bakery.getHelpers().size() + " cookies every " + helper.getSecondsPerCookie()
+                + " seconds.");
+    }
+
+    // EFFECTS: displays information about Helpers
+    public void generalHelperInformation() {
+        System.out.println("Each helper gives you a cookie every " + helper.getSecondsPerCookie() + " seconds"
+                + "\nEach helper costs " + helper.getCost() + " cookies to buy.");
+    }
+
+    public void save() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(bakery);
+            jsonWriter.close();
+            System.out.println("Saved progress to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: saves the workroom to file
+    public void load() {
+        try {
+            bakery = jsonReader.readBakery();
+            System.out.println("Loaded progress from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: terminates all existing helpers
+    //          displays information of bakery
+    public void conclude() {
+        /*
+        for (Helper helper : bakery.getHelpers()) {
+            executor.shutdown();
+        }
+        */
+        System.out.println("\nThanks for playing! You ended with " + bakery.getNumCookies() + " cookies and "
+                + bakery.getHelpers().size() + " helpers.");
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    public void options() {
+        String command = input.nextLine().toLowerCase();
+        if (command.isBlank()) {
+            bakery.addCookie();
+        } else if (command.equals("q")) {
+            userCookieInformation();
+        } else if (command.equals("w")) {
+            userHelperInformation();
+        } else if (command.equals("a")) {
+            buyHelper();
+        } else if (command.equals("i")) {
+            generalHelperInformation();
+        } else if (command.equals("s")) {
+            save();
+        } else if (command.equals("z")) {
+            load();
+        } else if (command.equals("x")) {
+            isRunning = false;
+        } else {
+            System.out.println("Invalid input, please try again.");
+        }
+    }
+
+    public void setExecutor() {
+        executor = Executors.newScheduledThreadPool(1);
+        executor.scheduleAtFixedRate(addCookie, 5, 5, TimeUnit.SECONDS);
+        executorList.add(executor);
+    }
+
+    Runnable addCookie = new Runnable() {
+        public void run() {
+            bakery.addCookie();
+        }
+    };
 }

@@ -8,7 +8,9 @@ clicker game when I was in middle school, but lost all my progress when the comp
 able to accumulate large quantities of cookies was very satisfying.
 
 ## User Stories
-- As a user, I want to be able to add a cookie to my list of cookies
-- As a user, I want to be able to view the cookies in my list of cookies
-- As a user, I want to be able to view the number of cookies in each cookie class
-- As a user, I want to be able to add onto the number of cookies in each cookie class
+- As a user, I want to be able to add a helper to my list of helpers in my bakery
+- As a user, I want to be able to view the number of helpers in my list of helpers in my bakery
+- As a user, I want to be able to view the number of cookies in my bakery class
+- As a user, I want to be able to add onto the number of cookies in my bakery class
+- As a user, I want to be able to save my cookie clicker game
+- As a user, I want to be able to load my cookie clicker game

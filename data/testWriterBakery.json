@@ -1,0 +1,13 @@
+{
+    "helpers": [
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        }
+    ],
+    "numCookies": 3
+}
