@@ -17,6 +17,7 @@ import java.util.concurrent.TimeUnit;
 // https://stackoverflow.com/questions/12908412/print-hello-world-every-x-seconds
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp
 // https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
 // Cookie clicker application
 public class Game {
@@ -29,8 +30,7 @@ public class Game {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    // EFFECTS: creates empty lists of Bakery and executors
-    //          prompts user to create a new Bakery then starts the game
+    // EFFECTS: constructs game and runs application
     public Game() throws FileNotFoundException {
         bakery = new Bakery();
         helper = new Helper();
@@ -55,8 +55,8 @@ public class Game {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a cookieHelper at the cost of 5 cookies
-    //          cookieHelper adds a cookie every 5 seconds. Is stackable
+    // EFFECTS: creates a helper at the cost of 5 cookies
+    //          helper adds a cookie every 5 seconds. Is stackable
     public void buyHelper() {
         if (bakery.getNumCookies() < 5) {
             System.out.println("Sorry, you do not have enough cookies to buy a helper.");
@@ -108,6 +108,7 @@ public class Game {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: loads the bakery from file
     public void load() {
         try {
@@ -118,8 +119,7 @@ public class Game {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: processes user input
     public void options() {
         String command = input.nextLine().toLowerCase();
         if (command.isBlank()) {
@@ -143,6 +143,8 @@ public class Game {
         }
     }
 
+    // MODIFIES: this
+    // EFFECT: determines how many cookies to add every 5 seconds depending on number of helpers
     Runnable addCookie = new Runnable() {
         public void run() {
             for (Helper helper : bakery.getHelpers()) {
@@ -151,9 +153,7 @@ public class Game {
         }
     };
 
-    // MODIFIES: this
-    // EFFECTS: terminates all existing helpers
-    //          displays information of bakery
+    // EFFECTS: displays information of bakery and terminates game
     public void conclude() {
         System.out.println("\nThanks for playing! You ended with " + bakery.getNumCookies() + " cookies and "
                 + bakery.getHelpers().size() + " helpers.");
