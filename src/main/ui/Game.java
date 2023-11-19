@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 // Citations:
 // https://stackoverflow.com/questions/12908412/print-hello-world-every-x-seconds
@@ -21,23 +22,31 @@ import java.util.concurrent.TimeUnit;
 
 // Cookie clicker application
 public class Game {
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 600;
+
     private static final String JSON_STORE = "./data/game.json";
-    private Bakery bakery;
-    private Helper helper;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
     private ScheduledExecutorService executor;
     private Scanner input;
     private boolean isRunning;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+
+    private Bakery bakery;
+    private Helper helper;
 
     // EFFECTS: constructs game and runs application
     public Game() throws FileNotFoundException {
         bakery = new Bakery();
         helper = new Helper();
+
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
+
         executor = Executors.newScheduledThreadPool(1);
         executor.scheduleAtFixedRate(addCookie, 5, 5, TimeUnit.SECONDS);
+
         System.out.println("Welcome to Cookie Clicker!");
         playGame();
     }
@@ -158,5 +167,9 @@ public class Game {
         System.out.println("\nThanks for playing! You ended with " + bakery.getNumCookies() + " cookies and "
                 + bakery.getHelpers().size() + " helpers.");
         System.exit(0);
+    }
+
+    public List<Helper> getHelpers() {
+        return bakery.getHelpers();
     }
 }
