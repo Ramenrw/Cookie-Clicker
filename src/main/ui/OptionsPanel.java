@@ -14,21 +14,22 @@ public class OptionsPanel extends JPanel {
     private JButton save;
     private JButton load;
     private JButton buyHelper;
+    private JButton removeHelper;
 
     // EFFECTS: creates a side panel with options for user
     public OptionsPanel(Game g) {
+        setPreferredSize(new Dimension(105, 800));
         game = g;
-        setBackground(new Color(180));;
-        add(Box.createVerticalStrut(50));
+        setBackground(new Color(180, 180, 180));
         buyHelperButton();
-        add(Box.createVerticalStrut(50));
+        add(Box.createVerticalStrut(690));
+        removeHelperButton();
         saveButton();
-        add(Box.createVerticalStrut(10));
         loadButton();
     }
 
     // MODIFIES: this
-    // EFFECTS: creates JButton that saves game when pressed
+    // EFFECTS: adds JButton that saves game when pressed
     private void saveButton() {
         save = new JButton("Save");
         save.addActionListener(new ActionListener() {
@@ -42,7 +43,7 @@ public class OptionsPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates JButton that loads game when pressed
+    // EFFECTS: adds JButton that loads game when pressed
     private void loadButton() {
         load = new JButton("Load");
         load.addActionListener(new ActionListener() {
@@ -56,7 +57,7 @@ public class OptionsPanel extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates JButton that buys helper when pressed
+    // EFFECTS: adds JButton that buys helper when pressed
     private void buyHelperButton() {
         buyHelper = new JButton("Buy helper");
         buyHelper.addActionListener(new ActionListener() {
@@ -67,5 +68,19 @@ public class OptionsPanel extends JPanel {
         });
 
         add(buyHelper);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds JButton that removes helper when pressed
+    private void removeHelperButton() {
+        removeHelper = new JButton("Remove helper");
+        removeHelper.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.removeHelper();
+            }
+        });
+
+        add(removeHelper);
     }
 }

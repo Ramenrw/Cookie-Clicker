@@ -67,4 +67,12 @@ public class Bakery implements Writable {
 
         return jsonArray;
     }
+
+    // MODIFIES: this
+    // EFFECTS: if helpers is not empty, remove a helper
+    public void removeHelper() {
+        if (!helpers.isEmpty()) {
+            helpers.remove(0);
+        }
+    }
 }

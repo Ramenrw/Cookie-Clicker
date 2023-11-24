@@ -76,4 +76,45 @@ class BakeryTest {
         assertEquals (2, testBakery.getHelpers().size());
     }
 
+    @Test
+    void testRemoveHelper() {
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.buyHelper();
+        assertEquals (0, testBakery.getNumCookies());
+        assertEquals (1, testBakery.getHelpers().size());
+        testBakery.removeHelper();
+        assertEquals (0, testBakery.getHelpers().size());
+    }
+
+    @Test
+    void testRemoveHelperNothingThere() {
+        testBakery.removeHelper();
+        assertEquals (0, testBakery.getHelpers().size());
+    }
+
+    @Test
+    void testRemoveHelpers() {
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.addCookie();
+        testBakery.buyHelper();
+        testBakery.buyHelper();
+        assertEquals (0, testBakery.getNumCookies());
+        assertEquals (2, testBakery.getHelpers().size());
+        testBakery.removeHelper();
+        assertEquals (1, testBakery.getHelpers().size());
+        testBakery.removeHelper();
+        assertEquals (0, testBakery.getHelpers().size());
+    }
 }

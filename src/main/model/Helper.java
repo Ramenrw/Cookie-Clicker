@@ -7,9 +7,9 @@ import persistence.Writable;
 
 // represents a helper with number of seconds required to produce a cookie and cost
 public class Helper implements Writable {
-    public static final Color COLOR = new Color(211, 211, 211);
-    public static final int SIZE_X = 50;
-    public static final int SIZE_Y = 50;
+    public static final Color COLOR = new Color(0, 0, 255);
+    public static final int SIZE_X = 25;
+    public static final int SIZE_Y = 25;
     private int secondsPerCookie;
     private int cost;
 

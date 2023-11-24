@@ -1,7 +1,45 @@
 {
-    "helpers": [{
-        "cost": 5,
-        "secondsPerCookie": 5
-    }],
-    "numCookies": 6
+    "helpers": [
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        },
+        {
+            "cost": 5,
+            "secondsPerCookie": 5
+        }
+    ],
+    "numCookies": 1188
 }

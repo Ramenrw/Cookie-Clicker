@@ -5,6 +5,7 @@ import model.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.*;
 
 // Citations:
@@ -12,18 +13,29 @@ import javax.swing.*;
 
 // The panel where the game is rendered
 public class GamePanel extends JPanel {
+    private static final int WIDTH = 800;
+    private static final int HEIGHT = 800;
+
     private Game game;
     private JButton addCookie;
     private JLabel cookies;
 
     // EFFECTS: sets size and background colour of panel
-    public GamePanel(Game g) {
-        setPreferredSize(new Dimension(Game.WIDTH, Game.HEIGHT));
-        setBackground(Color.GRAY);
-        cookies = new JLabel("" + game.getNumCookies());
+    public GamePanel(Game g) throws IOException {
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
         game = g;
+        setBackground(Color.GRAY);
+
+        cookies = new JLabel("Cookies: " + game.getNumCookies());
+        cookies.setPreferredSize(new Dimension(100, 30));
         add(cookies);
+
         add(Box.createHorizontalStrut(10));
+
+        JLabel cookieLabel = new JLabel(new ImageIcon("./data/cookie.jpg"));
+        cookieLabel.setVisible(true);
+        add(cookieLabel);
+
         addCookieButton();
     }
 
@@ -38,59 +50,32 @@ public class GamePanel extends JPanel {
     // MODIFIES: g
     // EFFECTS: draws the game onto g
     private void drawGame(Graphics g) {
-        drawCookie(g);
         drawHelpers(g);
     }
 
-    // MODIFIES: g
-    // EFFECTS: draws a cookie onto g
-    private void drawCookie(Graphics g) {
-        Cookie c = new Cookie();
-        Color savedCol = g.getColor();
-        g.setColor(Cookie.COLOR);
-        g.fillOval(c.X_POS, c.Y_POS, c.SIZE_X, c.SIZE_Y);
-    }
 
     // MODIFIES: g
     // EFFECTS: draws the helpers onto g
     private void drawHelpers(Graphics g) {
         int addX = 0;
+        int addY = 0;
         for (Helper helper : game.getHelpers()) {
-            drawHelper(g, addX);
+            if (addX >= WIDTH) {
+                addX = 0;
+                addY += helper.SIZE_Y;
+            }
+            drawHelper(g, addX, addY);
             addX += helper.SIZE_X;
         }
     }
 
     // MODIFIES: g
     // EFFECTS: draws the helper onto g, but with each additional helper, the x position is increased
-    private void drawHelper(Graphics g, int addX) {
-        Color savedCol = g.getColor();
+    private void drawHelper(Graphics g, int addX, int addY) {
         g.setColor(Helper.COLOR);
-        g.fillOval(game.WIDTH + Helper.SIZE_X / 2 + addX, game.HEIGHT + Helper.SIZE_Y / 2,
+        g.fillOval(addX, 600 + addY,
                 Helper.SIZE_X, Helper.SIZE_Y);
     }
-
-//    // MODIFIES: g
-//    // EFFECTS:  draws "Save"
-//    private void save(Graphics g) {
-//        Color saved = g.getColor();
-//        g.setColor(new Color(255, 255, 255));
-//        g.setFont(new Font("Arial", 20, 20));
-//        FontMetrics fm = g.getFontMetrics();
-//        g.drawString("Save", Game.WIDTH, Game.HEIGHT - 50);
-//        g.setColor(saved);
-//    }
-//
-//    // MODIFIES: g
-//    // EFFECTS:  draws "Load"
-//    private void load(Graphics g) {
-//        Color saved = g.getColor();
-//        g.setColor(new Color(255, 255, 255));
-//        g.setFont(new Font("Arial", 20, 20));
-//        FontMetrics fm = g.getFontMetrics();
-//        g.drawString("Load", Game.WIDTH, Game.HEIGHT);
-//        g.setColor(saved);
-//    }
 
     // MODIFIES: this
     // EFFECTS: creates JButton that adds a cookie when pressed
