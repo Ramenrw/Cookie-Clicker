@@ -5,6 +5,7 @@ import model.Helper;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -23,7 +24,7 @@ import java.util.List;
 // Cookie clicker application
 public class Game {
     public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int HEIGHT = 850;
 
     private static final String JSON_STORE = "./data/game.json";
     private JsonWriter jsonWriter;
@@ -169,7 +170,23 @@ public class Game {
         System.exit(0);
     }
 
+    // EFFECTS: returns list of helpers
     public List<Helper> getHelpers() {
         return bakery.getHelpers();
+    }
+
+    // MODIFIES: bakery
+    // EFFECTS: adds cookie to bakery
+    public void addCookie() {
+        bakery.addCookie();
+    }
+
+    // EFFECTS: returns number of cookies in bakery
+    public int getNumCookies() {
+        return bakery.getNumCookies();
+    }
+
+    public void userInput() {
+        // something to do with the mouse method in RunGame
     }
 }
