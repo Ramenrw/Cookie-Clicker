@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 // Citations:
+// https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
 // https://github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Starter
 // https://docs.oracle.com/javase/8/docs/api/javax/swing/Box.html
 
+// Displays options for user
 public class OptionsPanel extends JPanel {
     private Game game;
     private JButton save;

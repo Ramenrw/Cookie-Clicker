@@ -7,7 +7,10 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-// runs Game
+// Citations:
+// https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+
+// Main class
 public class RunGame extends JFrame {
     private static final int INTERVAL = 10;
 
@@ -16,6 +19,7 @@ public class RunGame extends JFrame {
     private OptionsPanel op;
     private Graphics graphics;
 
+    // EFFECTS: sets up window in which game will be played
     public RunGame() throws FileNotFoundException, IOException {
         super("A Budget Cookie Clicker Game");
         setResizable(false);
@@ -54,6 +58,7 @@ public class RunGame extends JFrame {
         setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2);
     }
 
+    // plays the game
     public static void main(String[] args) {
         try {
             new RunGame();

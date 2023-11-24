@@ -42,8 +42,8 @@ public class Game {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a helper at the cost of 5 cookies
-    //          helper adds a cookie every 5 seconds. Is stackable
+    // EFFECTS: creates a helper at the cost of 5 cookies and adds it to the list of helpers
+    //          helper adds a cookie every 5 seconds. Stackable
     public void buyHelper() {
         if (bakery.getNumCookies() < 5) {
             // do nothing
@@ -101,6 +101,8 @@ public class Game {
         return bakery.getNumCookies();
     }
 
+    // MODIFIES: bakery
+    // EFFECTS: removes helper from list of helpers
     public void removeHelper() {
         bakery.removeHelper();
     }

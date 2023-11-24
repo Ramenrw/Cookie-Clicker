@@ -10,6 +10,7 @@ import javax.swing.*;
 
 // Citations:
 // https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase
+// https://stackoverflow.com/questions/299495/how-to-add-an-image-to-a-jpanel
 
 // The panel where the game is rendered
 public class GamePanel extends JPanel {
@@ -21,6 +22,7 @@ public class GamePanel extends JPanel {
     private JLabel cookies;
 
     // EFFECTS: sets size and background colour of panel
+    //          updates this with the game to be displayed
     public GamePanel(Game g) throws IOException {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         game = g;
