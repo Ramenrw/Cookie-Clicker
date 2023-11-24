@@ -58,7 +58,7 @@ public class OptionsPanel extends JPanel {
     // MODIFIES: this
     // EFFECTS: creates JButton that buys helper when pressed
     private void buyHelperButton() {
-        buyHelper = new JButton("Save");
+        buyHelper = new JButton("Buy helper");
         buyHelper.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

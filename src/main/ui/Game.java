@@ -5,7 +5,6 @@ import model.Helper;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
