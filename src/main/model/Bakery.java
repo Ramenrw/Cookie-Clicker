@@ -35,6 +35,16 @@ public class Bakery implements Writable {
 
     public void addHelper() {
         helpers.add(new Helper());
+        EventLog.getInstance().logEvent(new Event("A helper was added to the bakery!"));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if helpers is not empty, remove a helper
+    public void removeHelper() {
+        if (!helpers.isEmpty()) {
+            helpers.remove(0);
+            EventLog.getInstance().logEvent(new Event("A helper was removed from the bakery!"));
+        }
     }
 
     public void setNumCookies(int numCookies) {
@@ -66,13 +76,5 @@ public class Bakery implements Writable {
         }
 
         return jsonArray;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: if helpers is not empty, remove a helper
-    public void removeHelper() {
-        if (!helpers.isEmpty()) {
-            helpers.remove(0);
-        }
     }
 }

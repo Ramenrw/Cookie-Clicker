@@ -14,3 +14,25 @@ able to accumulate large quantities of cookies was very satisfying.
 - As a user, I want to be able to add onto the number of cookies in my bakery class
 - As a user, I want to be able to save my cookie clicker game
 - As a user, I want to be able to load my cookie clicker game
+
+Phase 4: Task 2
+Saved progress to ./data/game.json
+Loaded progress from ./data/game.json
+Wed Nov 29 13:19:19 PST 2023
+A helper was added to the bakery!
+Wed Nov 29 13:19:19 PST 2023
+A helper was added to the bakery!
+Wed Nov 29 13:19:19 PST 2023
+A helper was added to the bakery!
+Wed Nov 29 13:19:23 PST 2023
+A helper was removed from the bakery!
+Wed Nov 29 13:19:23 PST 2023
+A helper was removed from the bakery!
+Wed Nov 29 13:19:27 PST 2023
+A helper was added to the bakery!
+Wed Nov 29 13:19:28 PST 2023
+A helper was added to the bakery!
+Wed Nov 29 13:19:28 PST 2023
+A helper was added to the bakery!
+Wed Nov 29 13:19:28 PST 2023
+A helper was added to the bakery!

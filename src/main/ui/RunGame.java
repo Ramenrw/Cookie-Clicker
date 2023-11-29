@@ -1,9 +1,14 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -32,6 +37,7 @@ public class RunGame extends JFrame {
         add(gp, BorderLayout.CENTER);
         add(op, BorderLayout.EAST);
 
+        addWindowListener(new WindowHandler());
         pack();
         centreOnScreen();
         setVisible(true);
@@ -56,6 +62,17 @@ public class RunGame extends JFrame {
     private void centreOnScreen() {
         Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screen.width - getWidth()) / 2, (screen.height - getHeight()) / 2);
+    }
+
+    // prints all logged events when window is closed
+    private class WindowHandler extends WindowAdapter {
+        // EFFECTS: prints out the game's event log when the game is closed
+        @Override
+        public void windowClosing(WindowEvent e) {
+            for (Event event : EventLog.getInstance()) {
+                System.out.println(event);
+            }
+        }
     }
 
     // plays the game
