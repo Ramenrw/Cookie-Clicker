@@ -7,11 +7,7 @@
         {
             "cost": 5,
             "secondsPerCookie": 5
-        },
-        {
-            "cost": 5,
-            "secondsPerCookie": 5
         }
     ],
-    "numCookies": 4
+    "numCookies": 6
 }
