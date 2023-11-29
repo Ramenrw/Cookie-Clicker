@@ -29,4 +29,9 @@ A helper was added to the bakery!
 Wed Nov 29 13:26:06 PST 2023
 A helper was added to the bakery!
 
-Process finished with exit code 0
+Phase 4: Task 3
+While I'm pretty satisfied with my project as a whole, there are still a handful of things I would change if I had time.
+I could probably merge my GamePanel and OptionsPanel classes. Since a Cookie Clicker game does not usually contain many
+features, I could have just included the buttons in the OptionPanel in the GamePanel, as two of the buttons are related
+to the game anyway. However, at the time, I was having trouble finding ways to efficiently assign different colours to 
+the background of different sections.
